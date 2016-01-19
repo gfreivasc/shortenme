@@ -8,7 +8,7 @@ class IndexView(TemplateView):
     template_name = "index.html"
     def get(self, request):
         r = requests.get('http://httpbin.org/status/418')
-        return render(request, 'shorten/index.html', {'text': r.text})
+        return render(request, 'index.html', {'text': r.text})
 
 # Create your views here.
 class LinkRedirectView(View):
