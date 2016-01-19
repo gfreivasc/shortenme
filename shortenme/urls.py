@@ -19,9 +19,9 @@ from django.contrib import admin
 import shorten.views
 
 urlpatterns = [
-    url(r'^$', shorten.views.IndexView.as_view, name='index'),
-    url(r'^(?P<hash>\w+)$', shorten.views.LinkRedirectView.as_view, name='redirect'),
-    url(r'^l/$', shorten.views.LinksView.as_view, name='links'),
-    # url(r'^l/(?P<hash>\w+)$', shorten.LinkView.as_view, name ='link'),
+    url(r'^$', shorten.views.IndexView.as_view(), name='index'),
+    url(r'^(?P<hash>\w+)$', shorten.views.LinkRedirectView.as_view(), name='redirect'),
+    url(r'^l/$', shorten.views.LinksView.as_view(), name='links'),
+    # url(r'^l/(?P<hash>\w+)$', shorten.LinkView.as_view(), name ='link'),
     url(r'^admin/', admin.site.urls),
 ]

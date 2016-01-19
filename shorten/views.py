@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 import string
+import requests
 
-class IndexView(View):
+class IndexView(TemplateView):
+    template_name = "index.html"
     def get(self, request):
-        return
+        r = requests.get('http://httpbin.org/status/418')
+        return render(request, 'shorten/index.html', {'text': r.text})
 
 # Create your views here.
 class LinkRedirectView(View):
