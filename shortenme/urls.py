@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^l/(?P<pk>[0-9]+)/$', shorten.views.LinkDetails.as_view(), name='link-details'),
     # url(r'^db', shorten.views.db, name='db'),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/$', django.contrib.auth.views.login),
+    url(r'^logout/$', django.contrib.auth.views.logout),
 ]
