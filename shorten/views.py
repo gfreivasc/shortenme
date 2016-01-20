@@ -28,7 +28,7 @@ class LinkRedirectView(View):
             pk += self.hash_alphabet.index(a)**i
             i -= 1
         
-        return pk
+        return pk - 1
         
     def get(self, request, hash):
         link = Link.objects.get(pk=self._hash_to_pk(hash))
