@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from django.contrib.auth.views import login, logout
 import shorten.views
 
 urlpatterns = [
@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^l/(?P<pk>[0-9]+)/$', shorten.views.LinkDetails.as_view(), name='link-details'),
     # url(r'^db', shorten.views.db, name='db'),
     url(r'^admin/', admin.site.urls),
-    url(r'^login/$', django.contrib.auth.views.login),
-    url(r'^logout/$', django.contrib.auth.views.logout),
+    url(r'^login/$', login, kwargs={'template_name': 'shorten/login.html'}, name='login'),
+    url(r'^logout/$', logout, kwargs={'template_name': 'shorten/logout.html'}, name='logout'),
 ]
