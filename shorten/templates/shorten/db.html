@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="container">
+
+
+<h2>Page View Report</h2>
+
+
+<ul>
+
+{% for link in links %}
+    <li>{{ link.real_url }}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endblock %}

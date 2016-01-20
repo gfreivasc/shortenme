@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^l/$', shorten.views.LinkCreate.as_view(), name='link-create'),
     url(r'^l/(?P<pk>[0-9]+)/$', shorten.views.LinkDetails.as_view(), name='link-details'),
     # url(r'^l/(?P<hash>\w+)$', shorten.LinkView.as_view(), name ='link'),
+    url(r'^db', shorten.views.db, name='db'),
     url(r'^admin/', admin.site.urls),
 ]

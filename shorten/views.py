@@ -62,3 +62,12 @@ class LinkDetails(TemplateView):
 class LinkCreate(CreateView):
     model = Link
     fields = ['real_url']
+    
+def db(request):
+
+    link = Link()
+    link.save()
+
+    links = link.objects.all()
+
+    return render(request, 'shorten/db.html', {'links': links})
