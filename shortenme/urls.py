@@ -21,7 +21,8 @@ import shorten.views
 urlpatterns = [
     url(r'^$', shorten.views.IndexView.as_view(), name='index'),
     url(r'^(?P<hash>\w+)$', shorten.views.LinkRedirectView.as_view(), name='redirect'),
-    url(r'^l/$', shorten.views.LinksView.as_view(), name='links'),
+    url(r'^l/$', shorten.views.LinkCreate.as_view(), name='link-create'),
+    url(r'^l/(?P<pk>[0-9]+)/$', shorten.views.LinkDetails.as_view(), name='link-details'),
     # url(r'^l/(?P<hash>\w+)$', shorten.LinkView.as_view(), name ='link'),
     url(r'^admin/', admin.site.urls),
 ]

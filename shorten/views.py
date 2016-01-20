@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
+from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect, HttpResponse
+from .models import Link
 import string
 import requests
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "shorten/index.html"
     def get(self, request):
         r = requests.get('http://httpbin.org/status/418')
-        return render(request, 'index.html', {'text': r.text})
+        return render(request, 'shorten/index.html', {'text': r.text})
 
-# Create your views here.
 class LinkRedirectView(View):
     def __init__(self):
         self.hash_alphabet = string.ascii_lowercase
@@ -30,16 +31,17 @@ class LinkRedirectView(View):
         return pk
         
     def get(self, request, hash):
-        link = Link.objects.get(pk=_hash_to_pk(hash))
+        link = Link.objects.get(pk=self._hash_to_pk(hash))
         return HttpResponseRedirect(link.real_url)
-        
-class LinksView(View):
+
+class LinkDetails(TemplateView):
+    template_name = "shorten/link_details.html"
+    
     def __init__(self):
         self.hash_alphabet = string.ascii_lowercase
         self.hash_alphabet += string.ascii_uppercase
         self.hash_alphabet += ''.join(str(x) for x in xrange(9))
-
-    # Transformar PK da entrada no db em hash pra link
+        
     def _pk_to_hash(self, pk):
         pk += 238328 # base de 3 letras do alfabeto
         
@@ -52,9 +54,11 @@ class LinksView(View):
         digitos.reverse()
         return ''.join(self.hash_alphabet[i] for i in digitos)
         
-    def post(self, request):
-        link = Link()
-        link = request.POST.get('link', '')
-        link.save
-        
-        return HttpResponse(status=201)
+    def get(self, request, pk):
+        url = 'https://shortenme.herokuapp.com/'
+        url += self._pk_to_hash(int(pk))
+        return render(request, 'shorten/link_details.html', {'url': url})
+    
+class LinkCreate(CreateView):
+    model = Link
+    fields = ['real_url']
