@@ -62,7 +62,8 @@ class LinkDetails(TemplateView):
 class LinkCreate(CreateView):
     model = Link
     fields = ['real_url']
-    
+
+"""    
 def db(request):
 
     link = Link()
@@ -71,3 +72,4 @@ def db(request):
     links = Link.objects.all()
 
     return render(request, 'shorten/db.html', {'links': links})
+"""
