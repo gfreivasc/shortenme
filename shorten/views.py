@@ -68,6 +68,6 @@ def db(request):
     link = Link()
     link.save()
 
-    links = link.objects.all()
+    links = Link.objects.all()
 
     return render(request, 'shorten/db.html', {'links': links})
