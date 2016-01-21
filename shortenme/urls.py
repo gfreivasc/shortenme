@@ -26,5 +26,6 @@ urlpatterns = [
     # url(r'^db', shorten.views.db, name='db'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login, kwargs={'template_name': 'shorten/login.html'}, name='login'),
-    url(r'^logout/$', logout, kwargs={'template_name': 'shorten/logout.html'}, name='logout'),
+    url(r'^logout/$', logout, kwargs={'template_name': 'shorten/logged_out.html'}, name='logout'),
+    url(r'^new_user/$', shorten.views.UserCreate.as_view(), name='new_user'),
 ]

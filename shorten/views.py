@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import CreateView
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Link
+from .forms import UserCreationForm
 import string
 import requests
 
@@ -73,3 +75,16 @@ def db(request):
 
     return render(request, 'shorten/db.html', {'links': links})
 """
+
+class UserCreate(CreateView):
+    form_class = UserCreationForm
+    template_name = 'shorten/registration.html'
+    success_url = '/'
+    
+    def form_valid(self, form):
+        valid = super(UserCreate, self).form_valid(form)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        new_user = authenticate(username=username, password=password)
+        login(self.request, new_user)
+        return valid

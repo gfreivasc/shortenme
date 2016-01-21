@@ -1,0 +1,8 @@
+{% extends 'shorten/base.html' %}
+
+{% block content %}
+<form action="" method="POST">{% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Create User"/>
+</form>
+{% endblock content %}

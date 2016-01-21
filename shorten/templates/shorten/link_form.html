@@ -1,8 +1,13 @@
 {% extends 'shorten/base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <form action="" method="POST">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Shorten!"/>
 </form>
+{% else %}
+<h3>Sorry! You're not logged in!</h3>
+Either login or registrate to proceed
+{% endif %}
 {% endblock content %}
