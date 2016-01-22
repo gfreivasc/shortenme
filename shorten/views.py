@@ -86,5 +86,5 @@ class UserCreate(CreateView):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         new_user = authenticate(username=username, password=password)
-        login(self.request, new_user)
+        # login(self.request, new_user)
         return valid
