@@ -1,5 +1,16 @@
 {% extends 'shorten/base.html' %}
 
 {% block content %}
-<pre>{{ text }}</pre>
+<div class="jumbotron">
+    <h1>Welcome to ShortenMe!</h1>
+    <h2>Your simple URL shortener</h2>
+    <br><br>
+    {% if not user.is_authenticated %}
+        <p>You're not logged in. Please login or register to proceed</p>
+    {% else %}
+        <a href="{% url 'link-create' %}">
+            <button class="btn btn-primary">Let's Begin</button>
+        </a>
+    {% endif %}
+</div>
 {% endblock content %}
