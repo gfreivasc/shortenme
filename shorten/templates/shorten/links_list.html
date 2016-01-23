@@ -1,0 +1,23 @@
+{% extends 'shorten/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="row">
+        <div class="col-md-2">
+            Your current links:
+        </div>
+        <div class="col-md-10">
+            {% for link in links %}
+            <a href="{{ link.real_url }}"><p>
+            <span class="label label-info">https://shortenme.herokuapp.com/{{ link.get_hash }}</span>
+            <span class="label label-default">{{ link.real_url }}</span>
+            </p></a>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="jumbotron">
+        <h2>Sorry! You're not logged in!</h2>
+    </div>
+{% endif %}
+{% endblock %}

@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Link
-from .forms import UserCreationForm
+from .forms import UserCreationForm, LinkForm
 import string
 import requests
 
@@ -38,32 +38,23 @@ class LinkRedirectView(View):
 
 class LinkDetails(TemplateView):
     template_name = "shorten/link_details.html"
-    
-    def __init__(self):
-        self.hash_alphabet = string.ascii_lowercase
-        self.hash_alphabet += string.ascii_uppercase
-        self.hash_alphabet += ''.join(str(x) for x in xrange(9))
-        
-    def _pk_to_hash(self, pk):
-        pk += 238328 # base de 3 letras do alfabeto
-        
-        digitos = []
-        
-        while pk > 0:
-            digitos.append(pk % 62)
-            pk /= 62
-            
-        digitos.reverse()
-        return ''.join(self.hash_alphabet[i] for i in digitos)
         
     def get(self, request, pk):
         url = 'https://shortenme.herokuapp.com/'
-        url += self._pk_to_hash(int(pk))
+        url += Link.objects.get(pk=pk).get_hash()
         return render(request, 'shorten/link_details.html', {'url': url})
     
 class LinkCreate(CreateView):
     model = Link
-    fields = ['real_url']
+    form_class = LinkForm
+    
+    def form_valid(self, form):
+        valid = super(LinkCreate, self).form_valid(form)
+        if (valid):
+            link = form.save(commit=False)
+            link.owner = self.request.user
+            link = link.save()
+        return valid
 
 """    
 def db(request):
@@ -88,3 +79,8 @@ class UserCreate(CreateView):
         new_user = authenticate(username=username, password=password)
         # login(self.request, new_user)
         return valid
+        
+class UserLinks(TemplateView):
+    def get(self, request):
+        links = Link.objects.filter(owner=request.user)
+        return render(request, 'shorten/links_list.html', {'links': links})

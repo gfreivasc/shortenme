@@ -2,11 +2,17 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
         Seu link é:
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <pre>{{ url }}</pre>
+    </div>
+    <div class="col-md-4">
+        <p>See your URLs:</p>
+        <a href="{% url 'user-links' %}">
+            <button class="btn btn-info">Your URLs</button>
+        </a>
     </div>
 </div>
 {% endblock content %}

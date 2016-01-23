@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from .models import Link
 
 class UserCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -27,3 +28,11 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+        
+class LinkForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        exclude = ('owner',)
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 1})
+        }
